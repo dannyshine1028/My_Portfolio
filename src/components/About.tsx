@@ -1,5 +1,12 @@
 import Reveal from "./Reveal";
 
+const careers = [
+  { company: "株式会社イレーオ", period: "2020年3月〜2021年12月", type: "正社員" },
+  { company: "株式会社グレムリン・ワークス", period: "2022年2月〜2025年3月", type: "正社員" },
+  { company: "株式会社エニーアップ", period: "2025年3月〜2025年11月", type: "業務委託" },
+  { company: "フリーランス", period: "2025年11月〜現在", type: "—" },
+];
+
 export default function About() {
   return (
     <section id="about" className="section-block">
@@ -28,38 +35,25 @@ export default function About() {
                 <strong>学歴</strong>
                 台湾国立聯合大学 電機資訊學院 情報工学科（2019年10月卒）
               </li>
-              <li className="profile-meta-block">
+              <li className="profile-meta-career">
                 <strong>経歴</strong>
                 <div className="table-wrap">
                   <table className="skill-table career-table">
-                    <thead>
+                    {/* <thead>
                       <tr>
-                        <th>会社</th>
+                        <th>会社名</th>
                         <th>期間</th>
                         <th>雇用形態</th>
                       </tr>
-                    </thead>
+                    </thead> */}
                     <tbody>
-                      <tr>
-                        <td>株式会社イレーオ</td>
-                        <td>2020年3月〜2021年12月</td>
-                        <td>正社員</td>
-                      </tr>
-                      <tr>
-                        <td>株式会社グレムリン・ワークス</td>
-                        <td>2022年2月〜2025年3月</td>
-                        <td>正社員</td>
-                      </tr>
-                      <tr>
-                        <td>株式会社エニーアップ</td>
-                        <td>2025年3月〜2025年11月</td>
-                        <td>業務委託</td>
-                      </tr>
-                      <tr>
-                        <td>フリーランス</td>
-                        <td>2025年11月〜現在</td>
-                        <td>—</td>
-                      </tr>
+                      {careers.map((c) => (
+                        <tr key={c.company}>
+                          <td>{c.company}</td>
+                          <td>{c.period}</td>
+                          <td>{c.type}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
