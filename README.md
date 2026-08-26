@@ -1,6 +1,6 @@
-# 林明 | Systems Engineer Portfolio (Next.js + DB版)
+# 林明 | Fullstack Engineer Portfolio (Next.js + DB版)
 
-Next.js（App Router）+ TypeScript + PostgreSQLで構築した、システムエンジニア向けポートフォリオサイトです。
+Next.js（App Router）+ TypeScript + PostgreSQLで構築した、フルスタックエンジニア向けポートフォリオサイトです。
 実績（プロジェクト）データはデータベースに保存され、`/admin` ページからパスワード認証で追加・編集・削除できます。
 
 ## 技術構成
@@ -27,7 +27,7 @@ Next.js（App Router）+ TypeScript + PostgreSQLで構築した、システム�
 │   ├── components/                  … 各セクションのUIコンポーネント
 │   ├── data/skills.ts               … スキル一覧データ
 │   └── lib/                         … 型定義・認証ロジック
-└── public/assets/                   … ロゴ・プロフィール写真
+└── public/assets/                   … ロゴ・プロフィール・実績画像
 ```
 
 ## セットアップ手順
@@ -107,12 +107,14 @@ netlify dev
 
 - **プロフィール写真**: `public/assets/images/profile.jpg`（正方形にトリミング済み）。差し替える場合は同名で上書きしてください。
 - **ロゴ**: `<LM/>` をモチーフにした新しいモノグラムロゴを作成し、`public/assets/logo/` に格納しています（SVGソースおよび各サイズのPNG・favicon）。ナビゲーションバーとブラウザタブに反映済みです。
+- **実績画像**: `public/assets/images/works/` にファイルを置き、`/admin` の「画像パス」に `/assets/images/works/ファイル名` を入力します。コード変更後にデプロイすれば画像が公開されます。
 
 ## スキル・実績データの編集
 
-- **スキル**: `src/data/skills.ts` を編集してください（フロントエンド、バックエンド、データベース、インフラ/CMS/モバイル、AI開発ツールの5カテゴリ）。
+- **スキル**: `src/data/skills.ts` を編集してください（フロントエンド、バックエンド、データベース、クラウド/インフラ、CMS/プラットフォーム、AI/開発ツール）。
 - **実績**: `/admin` から追加するか、`netlify/database/migrations/` に新しいマイグレーションファイルを追加してデータを投入することもできます。
+- **DBを既存サイトで更新する場合**: `0002_add_work_image.sql`（画像カラム）と `0003_replace_works_from_resume.sql`（実績の差し替え）が未適用なら、Netlify CLI でマイグレーションを再実行するか、SQLを手動適用してください。
 
 ## 掲載情報について（プライバシーに関する注記）
 
-公開ページには番地までの詳細な住所は掲載せず、市区レベル（台北市 中山区）のみを表示しています。契約時など詳細な住所が必要な場合は、メール（itprosomething@gmail.com）でのやり取りをおすすめします。
+公開ページには番地までの詳細な住所は掲載せず、市区レベル（台北市 中山区）のみを表示しています。契約時など詳細な住所が必要な場合は、メール（dannyshine1028@outlook.com）でのやり取りをおすすめします。

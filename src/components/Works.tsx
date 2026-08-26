@@ -3,37 +3,45 @@ import type { Work } from "@/lib/types";
 
 export default function Works({ works }: { works: Work[] }) {
   return (
-    <section id="works">
+    <section id="works" className="section-block">
       <div className="wrap">
-        <div className="eyebrow">deploy log</div>
-        <h2>実績</h2>
+        <div className="section-title-block">
+          <h2 className="section-title">WORKS</h2>
+          <p className="section-desc">実績</p>
+        </div>
+
         {works.length === 0 ? (
-          <p className="works-empty">
-            // まだ実績が登録されていません。/admin から追加してください。
-          </p>
+          <p className="works-empty">まだ実績が登録されていません。/admin から追加してください。</p>
         ) : (
-          <div className="log-list">
+          <div className="works-cards">
             {works.map((w) => (
-              <Reveal className="log-entry" key={w.id} data-status={w.status}>
-                <div className="log-meta">
-                  <span className="version">{w.version}</span>
-                  <span>{w.date}</span>
-                  <span className={`badge ${w.status}`}>{w.status}</span>
+              <Reveal className="work-card" key={w.id}>
+                <div className="work-card-image">
+                  {w.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={w.image} alt={`${w.title} の画像`} />
+                  ) : (
+                    <div className="work-card-placeholder" aria-hidden="true">
+                      <span>{w.title.slice(0, 1)}</span>
+                    </div>
+                  )}
                 </div>
-                <h3>{w.title}</h3>
-                <p>{w.description}</p>
-                <div className="tag-row">
-                  {w.tags.map((t) => (
-                    <span className="tag" key={t}>
-                      {t}
-                    </span>
-                  ))}
+                <div className="work-card-body">
+                  <h3 className="work-card-title">{w.title}</h3>
+                  <p className="work-card-date">{w.date}</p>
+                  <p className="work-card-desc">{w.description}</p>
+                  <p className="work-card-tech">{w.tags.join(" / ")}</p>
+                  {w.link && (
+                    <a
+                      className="work-card-link"
+                      href={w.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      詳細を見る
+                    </a>
+                  )}
                 </div>
-                {w.link && (
-                  <a className="log-link" href={w.link} target="_blank" rel="noopener noreferrer">
-                    詳細を見る →
-                  </a>
-                )}
               </Reveal>
             ))}
           </div>

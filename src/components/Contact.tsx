@@ -3,66 +3,53 @@
 import { useState } from "react";
 import Reveal from "./Reveal";
 
-const contactJson: Record<string, string> = {
-  name: "林明 (Lin Ming)",
-  email: "itprosomething@gmail.com",
-  location: "台北市 中山区, 台湾",
-  status: "available_for_projects",
-};
+const EMAIL = "itprosomething@gmail.com";
+const CROWDWORKS_URL = "https://crowdworks.jp/public/employees/3957628";
 
 export default function Contact() {
-  const [hint, setHint] = useState("クリックでコピー");
+  const [hint, setHint] = useState("メールをコピー");
 
   async function copyEmail() {
     try {
-      await navigator.clipboard.writeText("itprosomething@gmail.com");
-      setHint("コピーしました ✓");
+      await navigator.clipboard.writeText(EMAIL);
+      setHint("コピーしました");
     } catch {
-      setHint("コピーできませんでした");
+      setHint("コピーに失敗しました");
     }
-    setTimeout(() => setHint("クリックでコピー"), 2000);
+    setTimeout(() => setHint("メールをコピー"), 2000);
   }
 
-  const entries = Object.entries(contactJson);
-
   return (
-    <section id="contact">
+    <section id="contact" className="section-block section-alt">
       <div className="wrap">
-        <div className="eyebrow">contact</div>
-        <h2>お問い合わせ</h2>
-        <div className="contact-grid">
-          <Reveal className="json-card">
-            <div>
-              <span className="method">GET</span> /contact
-            </div>
-            <div>{"{"}</div>
-            {entries.map(([k, v], i) => (
-              <div key={k} className="json-line">
-                &ldquo;<span className="k">{k}</span>&rdquo;: &ldquo;
-                <span className="s">{v}</span>&rdquo;
-                {i < entries.length - 1 ? "," : ""}
-              </div>
-            ))}
-            <div>{"}"}</div>
-          </Reveal>
-
-          <Reveal className="contact-actions">
-            <a
-              className="btn btn-primary"
-              href="mailto:itprosomething@gmail.com"
-              style={{ textAlign: "center" }}
-            >
-              メールを送る
-            </a>
-            <button className="copy-btn" type="button" onClick={copyEmail}>
-              <span>itprosomething@gmail.com</span>
-              <span className="hint">{hint}</span>
-            </button>
-            <p className="contact-note">
-              公開ページには詳細な住所は掲載していません。契約時に必要な情報は、上記メールにてご連絡ください。
-            </p>
-          </Reveal>
+        <div className="section-title-block">
+          <h2 className="section-title">CONTACT</h2>
+          <p className="section-desc">お問い合わせ</p>
         </div>
+
+        <Reveal className="contact-simple">
+          <p>
+            ご依頼・ご相談がありましたら、メールまたは CrowdWorks
+            からお気軽にご連絡ください。
+          </p>
+          <ul className="contact-channels">
+            <li>
+              <a href={`mailto:${EMAIL}`}>
+                <span className="contact-channel-label">Mail</span>
+                <span className="contact-channel-value">{EMAIL}</span>
+              </a>
+            </li>
+            <li>
+              <a href={CROWDWORKS_URL} target="_blank" rel="noopener noreferrer">
+                <span className="contact-channel-label">CrowdWorks</span>
+                <span className="contact-channel-value">プロフィールを見る</span>
+              </a>
+            </li>
+          </ul>
+          <button className="btn btn-primary" type="button" onClick={copyEmail}>
+            {hint}
+          </button>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,15 +1,5 @@
-CREATE TABLE IF NOT EXISTS works (
-  id SERIAL PRIMARY KEY,
-  version TEXT NOT NULL,
-  date TEXT NOT NULL,
-  status TEXT NOT NULL CHECK (status IN ('PROD','BETA','ARCHIVED')),
-  title TEXT NOT NULL,
-  description TEXT NOT NULL,
-  tags TEXT[] NOT NULL DEFAULT '{}',
-  link TEXT,
-  image TEXT,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
+-- 既存DBのサンプル実績を履歴書・スキルシートベースの内容に差し替え
+TRUNCATE TABLE works RESTART IDENTITY;
 
 INSERT INTO works (version, date, status, title, description, tags, link) VALUES
 ('v6.0.0', '2026-06', 'PROD', '選挙ポスター掲示板マップ／アクションボード', '全国約12万件・700超自治体の選挙ポスター掲示板を地図上で可視化し、ボランティアの貼付進捗・完了報告・エラー対応を行うWebプラットフォームを企画から設計・開発まで一貫担当。大規模データでもスマホ中心の操作性を確保し、運営工数を大幅に削減。', ARRAY['Nuxt.js','Laravel 12','PHP 8.3','MySQL','AWS ECS','EC2'], NULL),

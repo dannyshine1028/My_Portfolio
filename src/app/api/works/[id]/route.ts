@@ -29,7 +29,7 @@ export async function PUT(
     return NextResponse.json({ error: "リクエストが不正です" }, { status: 400 });
   }
 
-  const { version, date, status, title, description, tags, link } = body as {
+  const { version, date, status, title, description, tags, link, image } = body as {
     version?: string;
     date?: string;
     status?: string;
@@ -37,6 +37,7 @@ export async function PUT(
     description?: string;
     tags?: string[];
     link?: string;
+    image?: string;
   };
 
   if (!version || !date || !status || !title || !description) {
@@ -51,9 +52,10 @@ export async function PUT(
     const rows = await db.sql`
       UPDATE works
       SET version = ${version}, date = ${date}, status = ${status}, title = ${title},
-          description = ${description}, tags = ${tags ?? []}, link = ${link || null}
+          description = ${description}, tags = ${tags ?? []}, link = ${link || null},
+          image = ${image || null}
       WHERE id = ${numId}
-      RETURNING id, version, date, status, title, description, tags, link
+      RETURNING id, version, date, status, title, description, tags, link, image
     `;
     if (!rows.length) {
       return NextResponse.json({ error: "見つかりません" }, { status: 404 });

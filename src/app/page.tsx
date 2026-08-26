@@ -14,14 +14,12 @@ async function getWorks(): Promise<Work[]> {
   try {
     const db = getDatabase();
     const rows = await db.sql`
-      SELECT id, version, date, status, title, description, tags, link
+      SELECT id, version, date, status, title, description, tags, link, image
       FROM works
       ORDER BY date DESC, id DESC
     `;
     return rows as unknown as Work[];
   } catch (err) {
-    // データベース未設定（ローカル開発時に netlify dev を使っていない場合など）でも
-    // ページ自体は表示できるよう、空配列にフォールバックする
     console.error("Failed to load works from database:", err);
     return [];
   }

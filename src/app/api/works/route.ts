@@ -10,7 +10,7 @@ export async function GET() {
   try {
     const db = getDatabase();
     const rows = await db.sql`
-      SELECT id, version, date, status, title, description, tags, link
+      SELECT id, version, date, status, title, description, tags, link, image
       FROM works
       ORDER BY date DESC, id DESC
     `;
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "リクエストが不正です" }, { status: 400 });
   }
 
-  const { version, date, status, title, description, tags, link } = body as {
+  const { version, date, status, title, description, tags, link, image } = body as {
     version?: string;
     date?: string;
     status?: string;
@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
     description?: string;
     tags?: string[];
     link?: string;
+    image?: string;
   };
 
   if (!version || !date || !status || !title || !description) {
@@ -55,9 +56,9 @@ export async function POST(req: NextRequest) {
   try {
     const db = getDatabase();
     const rows = await db.sql`
-      INSERT INTO works (version, date, status, title, description, tags, link)
-      VALUES (${version}, ${date}, ${status}, ${title}, ${description}, ${tags ?? []}, ${link || null})
-      RETURNING id, version, date, status, title, description, tags, link
+      INSERT INTO works (version, date, status, title, description, tags, link, image)
+      VALUES (${version}, ${date}, ${status}, ${title}, ${description}, ${tags ?? []}, ${link || null}, ${image || null})
+      RETURNING id, version, date, status, title, description, tags, link, image
     `;
     return NextResponse.json(rows[0], { status: 201 });
   } catch (err) {

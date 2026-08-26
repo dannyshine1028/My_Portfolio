@@ -11,6 +11,7 @@ interface FormState {
   description: string;
   tags: string;
   link: string;
+  image: string;
 }
 
 const emptyForm: FormState = {
@@ -21,6 +22,7 @@ const emptyForm: FormState = {
   description: "",
   tags: "",
   link: "",
+  image: "",
 };
 
 export default function AdminPage() {
@@ -99,6 +101,7 @@ export default function AdminPage() {
       description: w.description,
       tags: w.tags.join(", "),
       link: w.link || "",
+      image: w.image || "",
     });
     setFormError("");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -130,6 +133,7 @@ export default function AdminPage() {
         .map((t) => t.trim())
         .filter(Boolean),
       link: form.link || null,
+      image: form.image || null,
     };
 
     const url = editingId ? `/api/works/${editingId}` : "/api/works";
@@ -286,6 +290,19 @@ export default function AdminPage() {
             placeholder="Next.js, TypeScript, PostgreSQL"
           />
         </div>
+        <div>
+          <label htmlFor="image">画像パス（任意）</label>
+          <input
+            id="image"
+            value={form.image}
+            onChange={(e) => setForm({ ...form, image: e.target.value })}
+            placeholder="/assets/images/works/sample.jpg"
+          />
+          <p className="field-hint">
+            画像ファイルを <code>public/assets/images/works/</code>{" "}
+            に配置し、そのパスを入力してください。
+          </p>
+        </div>
         <div className="form-actions">
           <button className="btn btn-primary" type="submit" disabled={saving}>
             {saving ? "保存中..." : editingId ? "更新する" : "追加する"}
@@ -313,6 +330,7 @@ export default function AdminPage() {
                 <div className="admin-item-title">{w.title}</div>
                 <div className="admin-item-meta">
                   {w.version} ・ {w.date} ・ {w.status}
+                  {w.image ? " ・ 画像あり" : ""}
                 </div>
               </div>
               <div className="admin-item-actions">

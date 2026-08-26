@@ -2,11 +2,13 @@ export default function Footer() {
   return (
     <footer>
       <div className="wrap footer-inner">
-        <span>© 2026 林明 (Lin Ming). Built with care.</span>
-        <span className="status-line">
-          <span className="pulse" />
-          SYSTEM: ALL SERVICES OPERATIONAL
-        </span>
+        <nav className="footer-nav" aria-label="フッターナビ">
+          <a href="#about">PROFILE</a>
+          <a href="#skills">SKILL</a>
+          <a href="#works">WORKS</a>
+          <a href="#contact">CONTACT</a>
+        </nav>
+        <p className="copyright">Copyright © 林明 (Hayashi Akira). All Rights Reserved.</p>
       </div>
     </footer>
   );

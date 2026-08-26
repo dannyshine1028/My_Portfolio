@@ -9,6 +9,8 @@ export interface Work {
   description: string;
   tags: string[];
   link: string | null;
+  /** public配下のパス例: /assets/images/works/sample.jpg */
+  image: string | null;
 }
 
 export interface WorkInput {
@@ -19,6 +21,7 @@ export interface WorkInput {
   description: string;
   tags: string[];
   link?: string | null;
+  image?: string | null;
 }
 
 export const VALID_STATUSES: WorkStatus[] = ["PROD", "BETA", "ARCHIVED"];

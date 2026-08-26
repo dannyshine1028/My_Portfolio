@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Inter } from "next/font/google";
+import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["400", "500", "600", "700"],
 });
 
-const inter = Inter({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "林明 | Systems Engineer Portfolio",
+  title: "林明 | Fullstack Engineer Portfolio",
   description:
-    "林明（Lin Ming）システムエンジニアのポートフォリオサイト。Web開発・インフラ構築・システム開発の実績を掲載。",
+    "林明（はやし あきら）フルスタックエンジニアのポートフォリオ。Webシステム開発・インフラ・AI連携の実績を掲載。",
   icons: {
     icon: [
       { url: "/assets/logo/favicon.ico" },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${mono.variable} ${inter.variable}`}>
+    <html lang="ja" className={`${mono.variable} ${sans.variable}`}>
       <body>{children}</body>
     </html>
   );
