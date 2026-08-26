@@ -19,7 +19,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "TypeScript / JavaScript", years: "6年", rate: 5 },
       { name: "React / Next.js", years: "6年", rate: 5 },
       { name: "Vue.js / Nuxt.js", years: "6年", rate: 5 },
-      { name: "HTML5 / CSS", years: "8年", rate: 5 },
+      { name: "HTML5 / CSS", years: "7年", rate: 5 },
     ],
   },
   {
