@@ -9,7 +9,7 @@ export interface Work {
   description: string;
   tags: string[];
   link: string | null;
-  /** public配下のパス例: /assets/images/works/sample.jpg */
+  /** Netlify Blobsに保存された画像の配信パス例: /api/images/xxxxxxxx.jpg */
   image: string | null;
 }
 

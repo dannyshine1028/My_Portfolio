@@ -14,59 +14,38 @@ export default function Skills() {
     <section id="skills" className="section-block section-alt">
       <div className="wrap">
         <div className="section-title-block">
+          <p className="section-eyebrow">02 — SKILL</p>
           <h2 className="section-title">SKILL</h2>
           <p className="section-desc">スキル</p>
         </div>
 
-        <div className="skill-table-groups">
+        <div className="skill-groups">
           {skillGroups.map((group) => (
             <Reveal className="skill-block" key={group.title}>
               <h3>{group.title}</h3>
               <p className="skill-block-desc">{group.description}</p>
-              <div className="table-wrap">
-                <table className="skill-table">
-                  <thead>
-                    <tr>
-                      <th>技術</th>
-                      <th>経験年数</th>
-                      <th>スキル</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {group.items.map((it) => (
-                      <tr key={it.name}>
-                        <td>{it.name}</td>
-                        <td>{it.years}</td>
-                        <td>
-                          <Rate value={it.rate} />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <ul className="skill-pill-list">
+                {group.items.map((it) => (
+                  <li className="skill-pill" key={it.name}>
+                    <span className="skill-pill-name">{it.name}</span>
+                    <span className="chip chip-outline skill-pill-years">{it.years}</span>
+                    <Rate value={it.rate} />
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           ))}
 
           <Reveal className="skill-block">
             <h3>保有資格</h3>
             <p className="skill-block-desc">取得している資格です。</p>
-            <div className="table-wrap">
-              <table className="skill-table cert-table">
-                <thead>
-                  <tr>
-                    <th>資格</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {certifications.map((c) => (
-                    <tr key={c}>
-                      <td>{c}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <ul className="chip-row">
+              {certifications.map((c) => (
+                <li className="chip" key={c}>
+                  {c}
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </div>

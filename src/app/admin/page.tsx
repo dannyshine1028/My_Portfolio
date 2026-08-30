@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { Work, WorkStatus } from "@/lib/types";
 
 interface FormState {
@@ -39,6 +39,10 @@ export default function AdminPage() {
   const [formError, setFormError] = useState("");
   const [statusMsg, setStatusMsg] = useState("");
   const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [dragActive, setDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/admin/me")
@@ -111,6 +115,27 @@ export default function AdminPage() {
     setEditingId(null);
     setForm(emptyForm);
     setFormError("");
+    setUploadError("");
+  }
+
+  async function handleImageFile(file: File) {
+    setUploadError("");
+    setUploadingImage(true);
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body });
+      const data = await res.json();
+      if (!res.ok) {
+        setUploadError(data.error || "アップロードに失敗しました");
+        return;
+      }
+      setForm((f) => ({ ...f, image: data.path }));
+    } catch {
+      setUploadError("アップロードに失敗しました");
+    } finally {
+      setUploadingImage(false);
+    }
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -291,20 +316,65 @@ export default function AdminPage() {
           />
         </div>
         <div>
-          <label htmlFor="image">画像パス（任意）</label>
+          <label htmlFor="image">画像（任意）</label>
+          <div
+            className={`image-dropzone${dragActive ? " dragging" : ""}${
+              form.image ? " has-image" : ""
+            }`}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setDragActive(true);
+            }}
+            onDragLeave={() => setDragActive(false)}
+            onDrop={(e) => {
+              e.preventDefault();
+              setDragActive(false);
+              const file = e.dataTransfer.files?.[0];
+              if (file) handleImageFile(file);
+            }}
+            onClick={() => fileInputRef.current?.click()}
+            role="button"
+            tabIndex={0}
+          >
+            {form.image ? (
+              <div className="image-preview">
+                <img src={form.image} alt="プレビュー" />
+                <button
+                  type="button"
+                  className="image-remove-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setForm({ ...form, image: "" });
+                  }}
+                  aria-label="画像を削除"
+                >
+                  ×
+                </button>
+              </div>
+            ) : (
+              <p className="dropzone-hint">
+                {uploadingImage
+                  ? "アップロード中..."
+                  : "画像をドラッグ＆ドロップ、またはクリックして選択"}
+              </p>
+            )}
+          </div>
           <input
+            ref={fileInputRef}
             id="image"
-            value={form.image}
-            onChange={(e) => setForm({ ...form, image: e.target.value })}
-            placeholder="/assets/images/works/sample.jpg"
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            hidden
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleImageFile(file);
+              e.target.value = "";
+            }}
           />
-          <p className="field-hint">
-            画像ファイルを <code>public/assets/images/works/</code>{" "}
-            に配置し、そのパスを入力してください。
-          </p>
+          {uploadError && <p className="error-msg">{uploadError}</p>}
         </div>
         <div className="form-actions">
-          <button className="btn btn-primary" type="submit" disabled={saving}>
+          <button className="btn btn-primary" type="submit" disabled={saving || uploadingImage}>
             {saving ? "保存中..." : editingId ? "更新する" : "追加する"}
           </button>
           {editingId && (

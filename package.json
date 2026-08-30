@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/blobs": "^11.0.2",
     "@netlify/database": "latest",
     "next": "^16.3.0",
     "react": "^19.0.0",

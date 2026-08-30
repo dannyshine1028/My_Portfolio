@@ -8,6 +8,7 @@ Next.js（App Router）+ TypeScript + PostgreSQLで構築した、フルスタ�
 - **フロントエンド**: Next.js 16 (App Router) / React 19 / TypeScript
 - **API**: Next.js Route Handlers（Node.jsランタイム）
 - **データベース**: PostgreSQL（Netlify DB を利用。`@netlify/database` 経由でアクセス）
+- **画像ストレージ**: Netlify Blobs（`@netlify/blobs` 経由。管理画面からのドラッグ＆ドロップアップロードに使用）
 - **認証**: 管理画面用の簡易パスワード認証（署名付きCookieセッション）
 - **デプロイ先**: Netlify（`@netlify/plugin-nextjs` で自動構成）
 
@@ -23,6 +24,8 @@ Next.js（App Router）+ TypeScript + PostgreSQLで構築した、フルスタ�
 │   │   ├── admin/page.tsx           … 管理画面（ログイン＋実績CRUD）
 │   │   ├── api/works/               … 実績の一覧取得・追加API
 │   │   ├── api/works/[id]/          … 実績の更新・削除API
+│   │   ├── api/upload/              … 実績画像のアップロードAPI（Netlify Blobsへ保存）
+│   │   ├── api/images/[key]/        … アップロード画像の配信API
 │   │   └── api/admin/               … ログイン・ログアウト・セッション確認API
 │   ├── components/                  … 各セクションのUIコンポーネント
 │   ├── data/skills.ts               … スキル一覧データ
@@ -82,7 +85,7 @@ netlify dev
 
 `netlify dev` を使うことで、Next.jsの開発サーバーとデータベース接続情報（`NETLIFY_DB_URL`）が自動的に連携されます。ブラウザで `http://localhost:8888` を開いてください。
 
-（`npm run dev` で `next dev` を単体起動した場合、データベースには接続できません。実績セクションは空表示になりますが、他の部分は問題なく確認できます。）
+（`npm run dev` で `next dev` を単体起動した場合、データベースおよびNetlify Blobs（画像アップロード）には接続できません。実績セクションは空表示、画像アップロードはエラーになりますが、他の部分は問題なく確認できます。）
 
 ## Netlifyへのデプロイ
 
@@ -107,7 +110,7 @@ netlify dev
 
 - **プロフィール写真**: `public/assets/images/profile.jpg`（正方形にトリミング済み）。差し替える場合は同名で上書きしてください。
 - **ロゴ**: `<LM/>` をモチーフにした新しいモノグラムロゴを作成し、`public/assets/logo/` に格納しています（SVGソースおよび各サイズのPNG・favicon）。ナビゲーションバーとブラウザタブに反映済みです。
-- **実績画像**: `public/assets/images/works/` にファイルを置き、`/admin` の「画像パス」に `/assets/images/works/ファイル名` を入力します。コード変更後にデプロイすれば画像が公開されます。
+- **実績画像**: `/admin` の実績フォームで画像をドラッグ＆ドロップ（またはクリックして選択）するとNetlify Blobsに自動アップロードされ、即座にプレビュー・公開されます（jpg/png/webp/gif、最大5MB）。コード変更やデプロイは不要です。
 
 ## スキル・実績データの編集
 

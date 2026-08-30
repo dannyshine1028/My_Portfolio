@@ -23,6 +23,7 @@ export default function Contact() {
     <section id="contact" className="section-block section-alt">
       <div className="wrap">
         <div className="section-title-block">
+          <p className="section-eyebrow">04 — CONTACT</p>
           <h2 className="section-title">CONTACT</h2>
           <p className="section-desc">お問い合わせ</p>
         </div>

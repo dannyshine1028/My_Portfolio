@@ -12,6 +12,7 @@ export default function About() {
     <section id="about" className="section-block">
       <div className="wrap">
         <div className="section-title-block">
+          <p className="section-eyebrow">01 — PROFILE</p>
           <h2 className="section-title">PROFILE</h2>
           <p className="section-desc">プロフィール</p>
         </div>
@@ -22,6 +23,16 @@ export default function About() {
             <img src="/assets/images/profile.jpg" alt="林明のプロフィール写真" />
           </Reveal>
           <Reveal className="profile-body">
+            <div className="fact-chips">
+              <span className="chip chip-fact">
+                <span className="chip-fact-label">ロール</span>
+                フルスタックエンジニア
+              </span>
+              <span className="chip chip-fact">
+                <span className="chip-fact-label">稼働形態</span>
+                業務委託 / フルリモート
+              </span>
+            </div>
             <p>
               はじめまして。フルスタックエンジニアの林明（はやし
               あきら）と申します。台湾国立聯合大学 電機資訊學院
@@ -35,34 +46,24 @@ export default function About() {
                 <strong>学歴</strong>
                 台湾国立聯合大学 電機資訊學院 情報工学科（2019年10月卒）
               </li>
-              <li className="profile-meta-career">
-                <strong>経歴</strong>
-                <div className="table-wrap">
-                  <table className="skill-table career-table">
-                    {/* <thead>
-                      <tr>
-                        <th>会社名</th>
-                        <th>期間</th>
-                        <th>雇用形態</th>
-                      </tr>
-                    </thead> */}
-                    <tbody>
-                      {careers.map((c) => (
-                        <tr key={c.company}>
-                          <td>{c.company}</td>
-                          <td>{c.period}</td>
-                          <td>{c.type}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </li>
               <li>
                 <strong>住所</strong>
                 台湾 台北市 中山区 民泉 ERD 2区域 152番街 22番地
               </li>
             </ul>
+            <h3 className="profile-career-title">経歴</h3>
+            <ol className="timeline">
+              {careers.map((c) => (
+                <li className="timeline-item" key={c.company}>
+                  <div className="timeline-marker" aria-hidden="true" />
+                  <div className="timeline-content">
+                    <p className="timeline-period">{c.period}</p>
+                    <p className="timeline-company">{c.company}</p>
+                    <span className="chip chip-outline">{c.type}</span>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </Reveal>
         </div>
       </div>
