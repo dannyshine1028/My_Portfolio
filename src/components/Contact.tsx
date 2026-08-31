@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Reveal from "./Reveal";
 
-const EMAIL = "itprosomething@gmail.com";
-const CROWDWORKS_URL = "https://crowdworks.jp/public/employees/3957628";
+const EMAIL = "itprosomething@outlook.jp";
+const CROWDWORKS_URL = "https://crowdworks.jp/public/employees/7135343";
 
 export default function Contact() {
   const [hint, setHint] = useState("メールをコピー");
